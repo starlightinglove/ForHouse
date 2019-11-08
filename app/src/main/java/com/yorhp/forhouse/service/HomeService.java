@@ -16,6 +16,9 @@ import com.yorhp.forhouse.R;
 import com.yorhp.forhouse.color.LabColorLike;
 import com.yorhp.recordlibrary.ScreenRecordUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import toast.ToastUtil;
 
 /**
@@ -25,7 +28,17 @@ import toast.ToastUtil;
 public class HomeService extends BaseAccessbilityService {
 
 
-    int[] yPoint = {1000, 1500, 1750, 2000, 2250, 2500};
+    private static Integer[] y = {1000,1250, 1500, 1750, 2000, 2250, 2500};
+    public static List<Integer> yPoint;
+
+    static {
+        yPoint = new ArrayList<>();
+        for (Integer integer : y) {
+            yPoint.add(integer);
+        }
+    }
+
+
     int xPoint = 1180;
     int red = Color.parseColor("#ee2e45");
     private static boolean pause = true;
@@ -48,19 +61,19 @@ public class HomeService extends BaseAccessbilityService {
     }
 
 
+    private static Bitmap bitmap;
 
-    private  static Bitmap bitmap;
     private void start() {
         bitmap = ScreenRecordUtil.getInstance().getScreenShot();
         new Thread(() -> {
             LabColorLike labColorLike = new LabColorLike();
-            for (int i = 0; i < yPoint.length; i++) {
+            for (int i = 0; i < yPoint.size(); i++) {
                 if (pause) {
                     return;
                 }
                 //颜色为红色
-                if (labColorLike.isLike(bitmap.getPixel(xPoint, yPoint[i]), red, 10)) {
-                    clickOnScreen(xPoint, yPoint[i], 200, null);
+                if (labColorLike.isLike(bitmap.getPixel(xPoint, yPoint.get(i)), red, 10)) {
+                    clickOnScreen(xPoint, yPoint.get(i), 200, null);
                     SystemClock.sleep(500);
                     if (i == 0) {
                         //签到
