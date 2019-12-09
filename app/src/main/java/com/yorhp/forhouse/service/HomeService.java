@@ -64,30 +64,40 @@ public class HomeService extends BaseAccessbilityService {
     private static Bitmap bitmap;
 
     private void start() {
+        //获取当前屏幕截屏
         bitmap = ScreenRecordUtil.getInstance().getScreenShot();
         new Thread(() -> {
+            //初始化颜色识别类
             LabColorLike labColorLike = new LabColorLike();
+            //遍历这7个按钮
             for (int i = 0; i < yPoint.size(); i++) {
+                //如果暂停就return
                 if (pause) {
                     return;
                 }
                 //颜色为红色
                 if (labColorLike.isLike(bitmap.getPixel(xPoint, yPoint.get(i)), red, 10)) {
+                    //点击该按钮
                     clickOnScreen(xPoint, yPoint.get(i), 200, null);
+                    //500ms的时间跳转到下一个界面（淘宝还是略卡）
                     SystemClock.sleep(500);
                     if (i == 0) {
-                        //签到
+                        //如果是签到就完成了
                         continue;
                     } else {
+                        //先在界面停留3秒，等该界面加载完成
                         SystemClock.sleep(3000);
                         //签到页面滑动
                         for (int k = 0; k < 5; k++) {
+                            //模拟手指上滑操作，界面往下滑，有时候下滑到指定地方才能领喵币
                             performScrollForward();
                             SystemClock.sleep(2000);
                         }
                         for (int k = 0; k < 3; k++) {
+                            //模拟下滑
                             performScrollBackward();
                             SystemClock.sleep(1000);
+                            //模拟上滑
                             performScrollForward();
                             SystemClock.sleep(1000);
                         }
@@ -97,8 +107,8 @@ public class HomeService extends BaseAccessbilityService {
                         i--;
                     }
                     SystemClock.sleep(1000);
+                    //进行截屏
                     bitmap = ScreenRecordUtil.getInstance().getScreenShot();
-
                 }
             }
             pause = true;

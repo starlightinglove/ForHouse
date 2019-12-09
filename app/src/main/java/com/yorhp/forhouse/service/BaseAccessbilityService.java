@@ -27,11 +27,6 @@ public abstract class BaseAccessbilityService extends AccessibilityService {
     }
 
 
-
-
-
-
-
     protected void gestureOnScreen(Path path, long startTime, long duration,
                                    AccessibilityService.GestureResultCallback callback) {
         GestureDescription.Builder builde = new GestureDescription.Builder();
@@ -78,7 +73,7 @@ public abstract class BaseAccessbilityService extends AccessibilityService {
     public void performScrollBackward() {
         Path path = new Path();
         path.moveTo(680, 1000);
-        path.lineTo(680,2000);
+        path.lineTo(680, 2000);
         gestureOnScreen(path, 0, 500, null);
     }
 
@@ -88,7 +83,7 @@ public abstract class BaseAccessbilityService extends AccessibilityService {
     public void performScrollForward() {
         Path path = new Path();
         path.moveTo(680, 2000);
-        path.lineTo(680,1000);
+        path.lineTo(680, 1000);
         gestureOnScreen(path, 0, 500, null);
     }
 
